@@ -1,7 +1,4 @@
 # PCLMM Math Sandbox (Week 0)
-
-Welcome to the Crucible. 
-
 Before we start building the actual smart contract engine, you need to prove you can translate the financial mathematics from Sessions 1 and 2 into working Rust code. 
 
 **[ARCHITECTURAL NOTE]**: In real on-chain smart contracts, floating-point numbers (`f64`) are strictly banned because they cause deterministic rounding errors. However, because this sandbox is an off-chain *simulator*, we are allowing `f64` this week so you can focus strictly on standard Rust syntax and the DeFi formulas. Next week, the training wheels come off.
@@ -42,8 +39,8 @@ I'm looking for three things in your PR: **Formula Precision**, **System Reasoni
 - **V3 Real Reserves**: This is the "Aha!" moment for Concentrated Liquidity. You need to translate the $x_{real}$ and $y_{real}$ formulas into code. If you can't handle the relationship between $L$, current price $P$, and your bounds ($P_a, P_b$), your code won't work when we move to the smart contract next week.
 
 #### **2. The Test Suite**
-- **Make my test pass**: I've already written `test_v2_swap`. If it stays red, don't even bother opening the PR.
-- **Write your own tests**: You must replace the `todo!()` in `test_active_capital` and `test_real_reserves`. Use the **exact numbers** from our Session 1 and 2 whiteboards. If your tests don't match our session derivations, you haven't mastered the formula yet.
+- I've already written `test_v2_swap`. If it stays red, don't even bother opening the PR.
+- **Write your own tests**: You must replace the `todo!()` in `test_active_capital` and `test_real_reserves`. Use the **exact numbers** from our Session 1 and 2 . If your tests don't match our session derivations, you haven't mastered the formula yet.
 
 #### **3. Rust Standards**
 I'm watching your syntax. I expect to see:
@@ -57,10 +54,10 @@ I'm watching your syntax. I expect to see:
 2. **Clone** your forked repo to your local machine.
 3. **Create a Branch**: `git checkout -b your-name-math-implementation`
 4. **Write Code**: Fill in the `todo!()` blocks in `src/lib.rs`.
-5. **Verify**: Ensure `cargo test` passes.
-6. **Format**: Run `cargo fmt` to clean up your code syntax.
-7. **Commit & Push**: Push your branch to your GitHub fork.
-8. **Open a PR**: Go to the original PCLMM repository and click "Compare & pull request".
+5. Ensure `cargo test` passes.
+6. Run `cargo fmt` to clean up your code syntax.
+7. Push your branch to **your** GitHub fork.
+8. Go to the original PCLMM repository and click "Compare & pull request".
 
 ### **Review Standards:**
 I will be reviewing these PRs personally. 
