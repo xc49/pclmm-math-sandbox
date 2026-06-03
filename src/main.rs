@@ -4,6 +4,9 @@ use pclmm_math_sandbox::v3_math;
 fn main() {
     println!("--- AMM Math Sandbox ---\n");
 
+    // you can add CLI logic or manual simulations here.
+
+    // Example parameters for simulation
     // V2 Swap
     let r_x = 100.0;
     let r_y = 15000.0;
