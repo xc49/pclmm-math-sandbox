@@ -72,7 +72,6 @@ mod tests {
         let p_lower = 0.99;
         let p_upper = 1.01;
         let active_capital = calculate_active_capital(k, p_lower, p_upper);
-        // Assert that the active capital is approximately 10000.62
         assert!(
             (active_capital - 10_000.63).abs() < 1.0,
             "Expected ~10000.63, got {}",
@@ -87,7 +86,6 @@ mod tests {
         let p_a = 0.99;
         let p_b = 1.01;
         let (x_reserve, y_reserve) = calculate_real_reserves(l_depth, current_price, p_a, p_b);
-        // Assert that the real reserves are approximately (1000.0, 1000.0)
         assert!(
             (x_reserve - 4962.81).abs() < 0.01,
             "Expected ~4962.8, got {}",
