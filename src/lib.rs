@@ -15,12 +15,17 @@ pub mod v2_math {
         input_x: f64,
         fee_percentage: f64,
     ) -> f64 {
-        todo!("Implement V2 swap logic")
+        let fee_multiplier = 1.0 - fee_percentage;
+        let numerator = reserve_y * input_x * fee_multiplier;
+        let denominator = reserve_x + input_x * fee_multiplier;
+        numerator / denominator
     }
 
     /// Calculates the active capital (L) for a given k and price range.
     pub fn calculate_active_capital(k: f64, p_lower: f64, p_upper: f64) -> f64 {
-        todo!("Implement active capital formula")
+        let x1: f64 = (k / p_upper).sqrt();
+        let x2: f64 = (k / p_lower).sqrt();
+        x2 - x1
     }
 }
 
@@ -33,13 +38,16 @@ pub mod v3_math {
         p_a: f64,
         p_b: f64,
     ) -> (f64, f64) {
-        todo!("Implement V3 real reserves")
+        let x_reserve: f64 = l_depth * (1.0_f64 / current_price.sqrt() - 1.0_f64 / p_b.sqrt());
+        let y_reserve: f64 = l_depth * (current_price.sqrt() - p_a.sqrt());
+        (x_reserve, y_reserve)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::v2_math::*;
+    use super::v3_math::*;
 
     #[test]
     fn test_v2_swap() {
@@ -48,7 +56,7 @@ mod tests {
         let input_x = 10.0;
         let fee_percentage = 0.003;
 
-        let output = calculate_swap_output(reserve_x, reserve_y, input_x, fee_percentage);
+        let output: f64 = calculate_swap_output(reserve_x, reserve_y, input_x, fee_percentage);
 
         // Assert that the output is approximately 1359.92
         assert!(
@@ -60,11 +68,35 @@ mod tests {
 
     #[test]
     fn test_active_capital() {
-        todo!("Implement test for active capital")
+        let k = 1e12_f64;
+        let p_lower = 0.99;
+        let p_upper = 1.01;
+        let active_capital = calculate_active_capital(k, p_lower, p_upper);
+        // Assert that the active capital is approximately 10000.62
+        assert!(
+            (active_capital - 10_000.63).abs() < 1.0,
+            "Expected ~10000.63, got {}",
+            active_capital
+        );
     }
 
     #[test]
     fn test_real_reserves() {
-        todo!("Implement test for real reserves")
+        let l_depth = 1000000.0;
+        let current_price = 1.0;
+        let p_a = 0.99;
+        let p_b = 1.01;
+        let (x_reserve, y_reserve) = calculate_real_reserves(l_depth, current_price, p_a, p_b);
+        // Assert that the real reserves are approximately (1000.0, 1000.0)
+        assert!(
+            (x_reserve - 4962.81).abs() < 0.01,
+            "Expected ~4962.8, got {}",
+            x_reserve
+        );
+        assert!(
+            (y_reserve - 5012.56).abs() < 0.01,
+            "Expected ~5012.56, got {}",
+            y_reserve
+        );
     }
 }
